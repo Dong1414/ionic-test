@@ -1,32 +1,103 @@
+  
+import { globalStateSymbol } from '@/stores';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
 import Tabs from '../views/Tabs.vue'
+import { getGlobalState } from '@/stores'
+
+const globalState = getGlobalState();
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/tabs/tab1'
+    redirect: '/home/main'
   },
   {
-    path: '/tabs/',
+    path: '/home/',
     component: Tabs,
     children: [
       {
         path: '',
-        redirect: '/tabs/tab1'
+        redirect: '/home/main'
       },
       {
-        path: 'tab1',
-        component: () => import('@/views/Tab1.vue')
+        path: 'main',
+        component: () => import('@/views/home/Main.vue')
+      },
+    ]
+  },
+  {
+    path: '/member/',
+    component: Tabs,
+    children: [
+      {
+        path: '',
+        redirect: () => globalState.isLogined ? '/member/myPage' : '/member/login'
       },
       {
-        path: 'tab2',
-        component: () => import('@/views/Tab2.vue')
+        path: 'login',
+        component: () => import('@/views/member/Login.vue')
       },
       {
-        path: 'tab3',
-        component: () => import('@/views/Tab3.vue')
+        path: 'myPage',
+        component: () => import('@/views/member/MyPage.vue')
+      },
+      {
+        path: 'expertJoin',
+        component: () => import('@/views/member/ExpertJoin.vue')
+      },
+      {
+        path: 'myPage',
+        component: () => import('@/views/member/MyPage.vue')
+      },
+    ]
+  },
+  {
+    path: '/order/',
+    component: Tabs,
+    children: [
+      {
+        path: '',
+        redirect: '/order/main'
+      },
+      {
+        path: 'main',
+        component: () => import('@/views/order/Main.vue')
+      },
+      {
+        path: 'list',
+        component: () => import('@/views/order/OrderList.vue')
+      },
+      {
+        path: 'orderDetail',
+        component: () => import('@/views/order/OrderDetail.vue')
+      },
+      {
+        path: 'accept',
+        component: () => import('@/views/order/Accept.vue')
+      },
+      {
+        path: 'helperOrder',
+        component: () => import('@/views/order/HelperOrder.vue')
+      },
+      {
+        path: 'caleandarList',
+        component: () => import('@/views/order/CaleandarList.vue')
       }
+    ]
+  },
+  {
+    path: '/setting/',
+    component: Tabs,
+    children: [
+      {
+        path: '',
+        redirect: '/setting/main'
+      },
+      {
+        path: 'main',
+        component: () => import('@/views/setting/Main.vue')
+      },
     ]
   }
 ]
